@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+var voices=[], en, de;
+function read(text){
+var msg = new SpeechSynthesisUtterance(text);
+de = voices.filter(function(voice) { return voice.name.indexOf("Deutsch")!=-1 })[0];
+en = voices.filter(function(voice) { return voice.name.indexOf("English")!=-1 })[0];
+msg.voice = text.substr(-1)==' '? en : de;
+window.speechSynthesis.speak(msg);
+if (voices.length==0) voices = window.speechSynthesis.getVoices();
+}
+</script>
+<body ontouchstart="countTouches(event)" ontouchend="countTouches(event)">
+
+<a href="#">auf wiedersehen</a>
+<a href="#">goodbye </a>
+<script>
+var a = document.getElementsByTagName('a');
+
+for(var i =0; i< a.length; i++){
+    a[i].onclick = function(){ 
+        read(this.innerText);
+    }
+}
+
+function countTouches(event) {
+  var x = event.touches.length;
+}
+</script>
+
+</body>
+</html>
